@@ -1,0 +1,31 @@
+
+query {
+  {{#each milestones as |m| ~}}
+  {{m.hash}}: repository(owner:"{{m.org}}" name:"{{m.application}}"){
+    name
+    milestone(number:{{m.milestone_id}}){
+      id
+      title
+      description
+      createdAt
+      dueOn
+      state
+      url
+      pullRequests(last:20) {
+        nodes {
+          id
+          state
+          author{
+            login
+            avatarUrl
+            url
+          }
+          title
+          permalink     		
+        }
+        totalCount
+      }
+    }
+  }
+  {{/each~}}
+}

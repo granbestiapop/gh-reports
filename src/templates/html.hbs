@@ -1,0 +1,26 @@
+<html>
+
+<body>
+  {{#each templates as |t| ~}}
+    <h1>Aviso de deploy testrelease ({{t.repository_name}})</h1>
+    <section>
+      <h2>
+        Changelog
+        <a href="{{t.url}}">(Milestone v{{t.title}})</a>
+      </h2>
+      <ul>
+        {{#each t.pull_requests as |p| ~}}
+        <li>
+          <a href="{{p.permalink}}">
+            {{p.title}}
+          </a>
+          (<a href="{{p.author.url}}">@{{p.author.login}}</a>)
+        </li>
+        {{/each~}}
+
+      </ul>
+    </section>
+  {{/each~}}
+</body>
+
+</html>
