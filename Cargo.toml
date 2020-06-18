@@ -1,0 +1,15 @@
+[package]
+name = "reports"
+version = "0.1.0"
+authors = ["granbestiapop <leonardo.clavijo@mercadolibre.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+warp = "0.2.3"
+handlebars = "3.1.0"
+reqwest = { version = "0.10.6", features = ["json"]}
+tokio = { version = "0.2", features = ["macros"] }
+serde = { version = "1.0.112", features = ["derive"] }
+serde_json = "1.0.55"
