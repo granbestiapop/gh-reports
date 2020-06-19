@@ -1,0 +1,13 @@
+version: '3'
+services:
+  api:
+    image: "leokraken/ghreports:latest"
+    container_name: reports
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.reports.rule=Host(`reports.api.granbestiapop.com`)"
+      - "traefik.http.routers.reports.entrypoints=websecure"
+      - "traefik.http.routers.reports.tls.certresolver=myresolver"
+    ports:
+      - "3333:3333"
+    network_mode: bridge
