@@ -1,8 +1,7 @@
-//use crate::clients::client::{GithubClient};
-//use super::super::models;
 use hex;
 use regex::Regex;
-use crate::clients::{GithubClient};
+
+use crate::clients::github::GithubClient;
 use crate::models;
 
 #[derive(Clone)]
@@ -12,7 +11,6 @@ pub struct MilestoneService {
 
 impl MilestoneService {
     pub fn new() -> Self {
-        println!("New milestone service");
         MilestoneService {
             github_client: GithubClient::new(),
         }

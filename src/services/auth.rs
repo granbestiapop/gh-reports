@@ -1,5 +1,6 @@
 
-use crate::clients::{GithubAuthRequest, GithubClient};
+use crate::clients::github::{GithubClient};
+use crate::clients::responses::{GithubAuthRequest};
 
 pub struct AuthService {
   client: GithubClient,
@@ -9,7 +10,6 @@ pub struct AuthService {
 
 impl AuthService {
   pub fn new() -> Self {
-    println!("new auth service");
     Self {
       client: GithubClient::new(),
       client_secret: std::env::var("GITHUB_CLIENT_SECRET").expect("Set github client secret"),
