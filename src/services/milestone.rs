@@ -1,7 +1,9 @@
-use crate::clients::client::{GithubClient};
-use crate::models;
+//use crate::clients::client::{GithubClient};
+//use super::super::models;
 use hex;
 use regex::Regex;
+use crate::clients::{GithubClient};
+use crate::models;
 
 #[derive(Clone)]
 pub struct MilestoneService {

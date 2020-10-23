@@ -1,7 +1,8 @@
 
 use crate::services::factory::SharedContext;
-use crate::clients::client;
 use crate::utils;
+use crate::clients;
+
 use warp::Filter;
 
 pub fn auth(
@@ -10,7 +11,7 @@ pub fn auth(
     warp::path!("reports" / "callback")
         .and(utils::warp::with(context))
         .and(warp::header(warp::http::header::HOST.as_str()))
-        .and(warp::query::<client::GithubCallbackRequest>())
+        .and(warp::query::<clients::GithubCallbackRequest>())
         .and_then(github_callback)
         .and_then(redirect)
 }
@@ -18,7 +19,7 @@ pub fn auth(
 async fn github_callback(
     context: SharedContext,
     host: String,
-    request: client::GithubCallbackRequest,
+    request: clients::GithubCallbackRequest,
 ) -> Result<RedirectModel, warp::Rejection> {
     let request = context.auth_service.create_request(request.code);
     match context.auth_service.auth(&request).await {

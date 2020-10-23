@@ -1,6 +1,5 @@
-use crate::client;
 
-use client::{GithubAuthRequest, GithubClient};
+use crate::clients::{GithubAuthRequest, GithubClient};
 
 pub struct AuthService {
   client: GithubClient,

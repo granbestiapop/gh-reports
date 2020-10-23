@@ -2,6 +2,10 @@ use warp::Filter;
 
 mod routes;
 mod services;
+mod utils;
+mod clients;
+mod models;
+mod templates;
 
 #[tokio::main]
 async fn main() {

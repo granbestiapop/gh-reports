@@ -1,8 +1,8 @@
-use crate::templates;
-use crate::utils;
-use crate::clients::client::models;
 use crate::services;
 use crate::services::factory::SharedContext;
+use crate::utils;
+use crate::models;
+use crate::templates;
 use warp::Filter;
 
 pub fn reports(
