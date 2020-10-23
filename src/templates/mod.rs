@@ -1,7 +1,7 @@
 use handlebars::Handlebars;
-use serde::Serialize;
 use lazy_static::lazy_static;
-
+use askama::Template;
+use crate::models;
 
 lazy_static! {
   pub static ref TEMPLATE_ENGINE: Handlebars<'static> = {
@@ -15,23 +15,33 @@ lazy_static! {
   };
 }
 
-pub struct WithTemplate<T: Serialize> {
-  pub name: &'static str,
-  pub value: T,
+
+#[derive(Template)]
+#[template(path = "home.html")]
+pub struct HomeTemplate{}
+
+
+#[derive(Template)]
+#[template(path = "html_report.html")]
+pub struct HtmlReportTemplate {
+  pub title: String,
+  pub milestones: Vec<models::TemplateModel>,
 }
 
-/**
- * Generic template rendering using WithTemplate struct
- */
-pub fn render<T>(
-  template: WithTemplate<T>,
-  //hbs: Arc<Handlebars>,
-) -> Result<impl warp::Reply, warp::Rejection>
-where
-  T: Serialize,
-{
-  let render = TEMPLATE_ENGINE
-    .render(template.name, &template.value)
-    .unwrap_or_else(|err| err.to_string());
-  Ok(warp::reply::html(render))
+#[derive(Template)]
+#[template(path = "login.html")]
+pub struct LoginTemplate{}
+
+
+pub async fn render_template<T: Template>(template: T) -> Result<impl warp::Reply, warp::Rejection> {
+    let string = template.render().unwrap();
+    Ok(warp::reply::html(string))
+}
+
+pub async fn home_template(_: String) -> Result<impl warp::Reply, warp::Rejection> {
+    render_template(HomeTemplate {}).await
+}
+
+pub async fn login_template() -> Result<impl warp::Reply, warp::Rejection> {
+    render_template(LoginTemplate {}).await
 }

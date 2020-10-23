@@ -52,7 +52,7 @@ pub struct QueryClient {
   pub query: String,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct TemplateModel {
   pub repository_name: String,
   pub title: String,
@@ -64,6 +64,11 @@ pub struct TemplateModel {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct ReportModel{
+  pub milestones: Vec<TemplateModel>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct PullRequestModel {
   pub title:String, 
   pub permalink: String,
@@ -73,14 +78,15 @@ pub struct PullRequestModel {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct RequestParams {
-  pub token: String,
-  pub milestones: String
+  pub milestones: String,
+  pub title: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ReportOptions {
   pub token: String,
-  pub milestones: Vec<MilestoneInfo>
+  pub milestones: Vec<MilestoneInfo>,
+  pub title: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
