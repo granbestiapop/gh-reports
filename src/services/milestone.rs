@@ -58,6 +58,7 @@ pub fn get_milestone_info(response: &models::GraphQLResponse) -> models::ReportM
     }
 }
 
+// TODO BETTER handling regex
 pub fn parse_params(params: models::RequestParams, token: String) -> models::ReportOptions {
     let re = Regex::new(r"https://github.com/(.*)/(.*)/milestone/(.*)").unwrap();
     let milestones: Vec<&str> = params.milestones.split(",").collect();

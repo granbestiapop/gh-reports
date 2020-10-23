@@ -1,20 +1,5 @@
-use handlebars::Handlebars;
-use lazy_static::lazy_static;
 use askama::Template;
 use crate::models;
-
-lazy_static! {
-  pub static ref TEMPLATE_ENGINE: Handlebars<'static> = {
-    let mut hb = Handlebars::new();
-    hb.register_template_file("query", "./src/templates/query.hbs")
-      .unwrap();
-    hb.register_template_file("template", "./src/templates/html.hbs")
-      .unwrap();
-    println!("Creating template engine!");
-    hb
-  };
-}
-
 
 #[derive(Template)]
 #[template(path = "home.html")]
@@ -31,6 +16,12 @@ pub struct HtmlReportTemplate {
 #[derive(Template)]
 #[template(path = "login.html")]
 pub struct LoginTemplate{}
+
+#[derive(Template)]
+#[template(path = "query.html")]
+pub struct QueryTemplate{
+  pub milestones: Vec<models::MilestoneInfo>
+}
 
 
 pub async fn render_template<T: Template>(template: T) -> Result<impl warp::Reply, warp::Rejection> {

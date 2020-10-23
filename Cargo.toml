@@ -8,13 +8,11 @@ edition = "2018"
 
 [dependencies]
 warp = "0.2.3"
-handlebars = "3.1.0"
 reqwest = { version = "0.10.6", features = ["json"]}
 tokio = { version = "0.2", features = ["macros"] }
 serde = { version = "1.0.112", features = ["derive"] }
 serde_json = "1.0.55"
 regex = "1"
-lazy_static = "1.4.0"
 hex = "0.4.2"
 askama = "0.10.3"
 cookie = "0.14.2"

@@ -2,7 +2,7 @@ use crate::models;
 use crate::templates;
 use super::responses::*;
 
-use serde_json::json;
+use askama::Template;
 
 #[derive(Clone)]
 pub struct GithubClient {
@@ -23,9 +23,10 @@ impl GithubClient {
 		&self,
 		options: models::ReportOptions,
 	) -> Result<models::GraphQLResponse, reqwest::Error> {
-		let query = get_query(&options);
+		let query = get_query(options.clone());
+		let token = options.token;
 		let model = models::QueryClient { query: query };
-		let token_header = format!("bearer {}", options.token);
+		let token_header = format!("bearer {}", token);
 
 		let response: models::GraphQLResponse = self
 			.client
@@ -60,8 +61,9 @@ impl GithubClient {
 	}
 }
 
-fn get_query(options: &models::ReportOptions) -> String {
-	templates::TEMPLATE_ENGINE
-		.render("query", &json!({"milestones": options.milestones}))
-		.unwrap_or_else(|err| err.to_string())
+fn get_query(options: models::ReportOptions) -> String {
+	let template = templates::QueryTemplate{
+		milestones: options.milestones,
+	};
+	template.render().unwrap_or_else(|err| err.to_string())
 }
