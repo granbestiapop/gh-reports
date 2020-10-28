@@ -92,7 +92,8 @@ jobs:
         with:
           use-cross: true
           command: build
-          args: --target x86_64-unknown-linux-musl --release
+          args: --target x86_64-unknown-linux-musl --release --features vendored
+
       - uses: actions/upload-artifact@v2
         with:
           name: main-musl
