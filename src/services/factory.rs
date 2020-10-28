@@ -10,10 +10,10 @@ pub struct Context {
     pub auth_service: SharedAuthService,
 }
 
-pub fn create_context() -> SharedContext{
+pub fn create_context() -> SharedContext {
     let mservice = SharedMilestoneService::new(MilestoneService::new());
     let authservice = SharedAuthService::new(AuthService::new());
-    SharedContext::new(Context{
+    SharedContext::new(Context {
         milestone_service: mservice,
         auth_service: authservice,
     })

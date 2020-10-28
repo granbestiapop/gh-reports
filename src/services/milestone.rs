@@ -1,4 +1,3 @@
-use hex;
 use regex::Regex;
 
 use crate::clients::github::GithubClient;
@@ -48,20 +47,18 @@ pub fn get_milestone_info(response: &models::GraphQLResponse) -> models::ReportM
                 description: repository.milestone.description.to_owned(),
                 created_at: repository.milestone.created_at.to_owned(),
                 url: repository.milestone.url.to_owned(),
-                pull_requests: pull_requests,
+                pull_requests,
                 release_tag_url: "".to_string(), //TODO mobile
             }
         })
         .collect();
-    models::ReportModel {
-        milestones: milestones,
-    }
+    models::ReportModel { milestones }
 }
 
 // TODO BETTER handling regex
 pub fn parse_params(params: models::RequestParams, token: String) -> models::ReportOptions {
     let re = Regex::new(r"https://github.com/(.*)/(.*)/milestone/(.*)").unwrap();
-    let milestones: Vec<&str> = params.milestones.split(",").collect();
+    let milestones: Vec<&str> = params.milestones.split(',').collect();
     let milestones_options = milestones
         .iter()
         .map(|m| {
@@ -70,15 +67,15 @@ pub fn parse_params(params: models::RequestParams, token: String) -> models::Rep
                 org: captures[1].to_owned(),
                 application: captures[2].to_owned(),
                 milestone_id: captures[3].to_owned(),
-                milestone: m.to_string(),
+                milestone: (*m).to_string(),
                 hash: format!("m_{}", hex::encode(m)),
             }
         })
         .collect();
 
     models::ReportOptions {
-        token: token.clone(),
+        token,
         milestones: milestones_options,
-        title: params.title.unwrap_or("".to_string()),
+        title: params.title.unwrap_or_else(|| "".to_string()),
     }
 }

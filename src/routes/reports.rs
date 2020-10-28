@@ -1,8 +1,8 @@
+use crate::models;
 use crate::services;
 use crate::services::factory::SharedContext;
-use crate::utils;
-use crate::models;
 use crate::templates;
+use crate::utils;
 use warp::Filter;
 
 pub fn reports(
@@ -29,10 +29,14 @@ async fn fetch_reports(
     params: models::ReportOptions,
 ) -> Result<templates::HtmlReportTemplate, warp::Rejection> {
     let title = params.clone().title;
-    let data = context.milestone_service.get_milestone(params.clone()).await.unwrap();
+    let data = context
+        .milestone_service
+        .get_milestone(params.clone())
+        .await
+        .unwrap();
     let template = templates::HtmlReportTemplate {
         title: title.clone(),
         milestones: data.milestones,
     };
-    return Ok(template);
+    Ok(template)
 }

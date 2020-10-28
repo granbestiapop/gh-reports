@@ -1,3 +1,3 @@
-pub mod milestone;
 pub mod auth;
 pub mod factory;
+pub mod milestone;

@@ -1,4 +1,2 @@
-
-
-pub mod responses;
 pub mod github;
+pub mod responses;
